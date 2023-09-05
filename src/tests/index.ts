@@ -1,38 +1,11 @@
-const { SubscriptionClient } = require("subscriptions-transport-ws");
-const WebSocket = require("ws");
-const express = require("express");
-const http = require("http");
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
-const app = express();
-const server = http.createServer(app);
-
-// Define your GraphQL endpoint URL
 const GRAPHQL_URL = "http://192.168.1.2:2022/graphql";
-
-// Define your authentication credentials
 const GRAPHQL_LOGIN = "admin";
 const GRAPHQL_PASSWD = "swi67o2wRonAepM58k2Q";
 
-// Set up the headers with authentication
-const headers = {
-  Authorization: `Basic ${Buffer.from(
-    `${GRAPHQL_LOGIN}:${GRAPHQL_PASSWD}`
-  ).toString("base64")}`,
-};
-
-// Create a WebSocket connection to the GraphQL server
-const wsClient = new SubscriptionClient(
-  GRAPHQL_URL.replace("http", "ws"),
-  {
-    reconnect: true,
-    connectionParams: headers,
-  },
-  WebSocket
-);
-
-// Subscribe to a GraphQL subscription event (replace with your actual subscription event)
-const subscription = wsClient.request({
-  query: `
+const query = `
+query {
   queues {
     queue
     strategy
@@ -64,22 +37,40 @@ const subscription = wsClient.request({
       wait
     }
   }
-  `,
+}
+`;
+
+const client = new SubscriptionClient(GRAPHQL_URL, {
+  reconnect: true,
+  connectionParams: {
+    headers: {
+      Authorization: `Basic ${Buffer.from(
+        `${GRAPHQL_LOGIN}:${GRAPHQL_PASSWD}`
+      ).toString("base64")}`,
+      "Content-Type": "application/json",
+    },
+  },
 });
 
-// Handle subscription updates
-subscription.subscribe({
-  next: (data) => {
-    app.get("/update", (req, res) => {
-      res.json(data);
-    });
-  },
-  error: (error) => {
-    console.error("Subscription error:", error);
-  },
+client.onConnected(() => {
+  console.log("Connected to GraphQL WebSocket");
 });
 
-// Start the HTTP server
-server.listen(3000, () => {
-  console.log("HTTP server listening on port 3000");
+client.onDisconnected(() => {
+  console.log("Disconnected from GraphQL WebSocket");
+});
+
+client.onError((error) => {
+  console.error("WebSocket Error:", error.message);
+});
+
+const observer = client.request({ query });
+
+observer.subscribe({
+  next: (data: any) => {
+    console.log("Received data:", data);
+  },
+  error: (error: any) => {
+    console.error("Subscription error:", error.message);
+  },
 });
