@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "antd";
-import { columns, data } from "../constants";
+import { columns, tableData } from "../constants";
 
 const CallsTable: React.FC = () => (
   <Table
@@ -8,7 +8,7 @@ const CallsTable: React.FC = () => (
       expandedRowRender: (record) => <div>{record.actions}</div>,
     }}
     columns={columns}
-    dataSource={data}
+    dataSource={tableData}
     bordered={true}
     size="small"
     tableLayout={"fixed"}

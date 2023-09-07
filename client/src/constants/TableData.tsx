@@ -33,7 +33,7 @@ const columns: ColumnsType<DataType> = [
   { title: "Длительность", dataIndex: "duration", key: "duration" },
 ];
 
-const data: DataType[] = [
+const tableData: DataType[] = [
   {
     key: 1,
     status: <FaPause style={iconStyle} />,
@@ -144,4 +144,4 @@ const data: DataType[] = [
   },
 ];
 
-export { columns, data };
+export { columns, tableData };

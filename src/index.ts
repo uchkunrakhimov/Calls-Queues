@@ -28,5 +28,6 @@ export { io };
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
-  console.log(`Server running on PORT: ${PORT}`);
+  console.log(`Server running on: http://127.0.0.1:${PORT}/`);
+  console.log(`All response: http://127.0.0.1:${PORT}/res`);
 });
