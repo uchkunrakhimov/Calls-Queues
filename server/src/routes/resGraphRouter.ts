@@ -4,7 +4,7 @@ import { io } from "../";
 
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+const sendRequestAndEmitData = async () => {
   const query = `
       query GetQueueData {
         queues {
@@ -41,10 +41,23 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       }
     `;
 
-  const response = await reqGraph(query);
-  const responseData = response.data;
-  io.emit("data", responseData);
-  res.json(responseData);
+  try {
+    const response = await reqGraph(query);
+    io.emit("data", response.data);
+  } catch (error: any) {
+    console.error(error.message);
+  }
+};
+
+setInterval(sendRequestAndEmitData, 1000);
+
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await sendRequestAndEmitData();
+    res.json({ message: "Initial request sent" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to send initial request" });
+  }
 });
 
 export { router as ResGraph };

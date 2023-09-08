@@ -1,5 +1,5 @@
 {
-  "name": "call_system",
+  "name": "call_queues",
   "version": "0.0.1",
   "author": {
     "name": "Uchkun Rakhimov",
@@ -7,7 +7,6 @@
     "url": "https://github.com/uchkunrakhimov"
   },
   "type": "module",
-  "proxy": "http://localhost:8080",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

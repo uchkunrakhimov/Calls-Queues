@@ -4,12 +4,6 @@ const container = {
   padding: "0 15px",
 };
 
-const layout = {
-  boxShadow: "0px 0px 10px -2px rgba(34, 60, 80, 0.15)",
-  padding: "1rem 2rem",
-  borderRadius: "6px",
-};
-
 const mainText = {
   textAlign: "left",
   margin: "1.5rem 0",
@@ -34,4 +28,4 @@ const spaceBetween = {
   justifyContent: "space-between",
 };
 
-export { container, layout, mainText, iconStyle, ringIconStyle, flexCenter, spaceBetween };
+export { container, mainText, iconStyle, ringIconStyle, flexCenter, spaceBetween };

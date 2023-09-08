@@ -1,19 +1,14 @@
 import React from "react";
 import { container } from "../styles";
-//import Header from "../components/Header";
-//import Contents from "../components/Contents";
-//import Test from "../components/Test";
-import TestTable from "../components/TestTable";
+import { Header, Contents } from "../components/";
 
 const App = () => {
   return (
     <section style={container as React.CSSProperties}>
-      {/* <Header />
-      <Contents /> */}
-      {/* <Test /> */}
-      {<TestTable />}
+      <Header />
+      <Contents />
     </section>
   );
 };
 
-export default App;
+export { App };

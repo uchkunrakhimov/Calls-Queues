@@ -50,7 +50,7 @@ const GET_QUEUE_DATA = gql`
   }
 `;
 
-const Test = () => {
+const RealTimeCalls = () => {
   const { loading, error, data } = useQuery(GET_QUEUE_DATA);
 
   if (loading) return <p>Loading...</p>;
@@ -65,6 +65,6 @@ const Test = () => {
 
 export default () => (
   <ApolloProvider client={client}>
-    <Test />
+    <RealTimeCalls />
   </ApolloProvider>
 );
