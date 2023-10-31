@@ -18,3 +18,5 @@ pm2 start ./src/index.js
 
 - **node > 18**
 - **npm > 9**
+
+**The frontend part is located in the [client](https://github.com/uchkunrakhimov/calls-queues/tree/client) branch.**
